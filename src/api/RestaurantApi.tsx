@@ -61,3 +61,29 @@ export const useSearchRestaurants = (
     isLoading,
   };
 };
+
+export const useNearbyRestaurants = (maxDeliveryTime: number, city?: string) => {
+  const fetchNearbyRestaurants = async (): Promise<Restaurant[]> => {
+    const response = await fetch(
+      `${API_BASE_URL}/api/restaurant/nearby?maxDeliveryTime=${maxDeliveryTime}&city=${city}`
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch nearby restaurants");
+    }
+
+    return response.json();
+  };
+
+  const { data: restaurants, isLoading } = useQuery(
+    ["nearbyRestaurants", maxDeliveryTime, city], // include city as part of query key
+    fetchNearbyRestaurants,
+    { enabled: maxDeliveryTime > 0 && city != undefined } // Ensure that the query is only enabled when city is selected
+  );
+
+  return {
+    restaurants,
+    isLoading,
+  };
+};
+

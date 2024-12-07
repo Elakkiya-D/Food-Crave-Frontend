@@ -108,27 +108,26 @@ const DetailPage = () => {
   }
 
   return (
-    <div className="flex flex-col gap-10">
-    {/* <div className="relative w-[20px] h-[20px] mb-2">
-          <img
-            src={restaurant.imageUrl}
-            className="rounded-full object-cover" 
-            alt="Restaurant Logo" 
-          />
-        </div> */}
-      <div className="grid md:grid-cols-[4fr_2fr] gap-10 md:px-16">
-        <div className="flex flex-col gap-4">
-          <RestaurantInfo restaurant={restaurant} />
-          <span className="text-2xl font-bold tracking-tight">Menu</span>
-          {restaurant.menuItems.map((menuItem) => (
-            <MenuItem
-              menuItem={menuItem}
-              addToCart={() => addToCart(menuItem)}
-            />
-          ))}
+    <div className="flex flex-col gap-12 md:px-16">
+      <RestaurantInfo restaurant={restaurant} />
+
+      <div className="grid md:grid-cols-[4fr_2fr] gap-12">
+        {/* Menu Section */}
+        <div className="flex flex-col gap-6">
+          <h2 className="text-3xl font-semibold tracking-tight">Menu</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {restaurant.menuItems.map((menuItem) => (
+              <MenuItem
+                key={menuItem._id}
+                menuItem={menuItem}
+                addToCart={() => addToCart(menuItem)}
+              />
+            ))}
+          </div>
         </div>
 
-        <div className="space-y-4">
+        {/* Order Summary */}
+        <div>
           <Card>
             <OrderSummary
               restaurant={restaurant}

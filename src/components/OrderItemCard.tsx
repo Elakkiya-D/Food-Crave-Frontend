@@ -1,3 +1,4 @@
+// OrderItemCard.tsx
 import { Order, OrderStatus } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Separator } from "./ui/separator";
@@ -11,27 +12,20 @@ import {
   SelectValue,
 } from "./ui/select";
 import { ORDER_STATUS } from "@/config/order-status-config";
-import { useUpdateMyRestaurantOrder } from "@/api/MyRestaurantApi";
-import { useEffect, useState } from "react";
+import { useState} from "react";
 
 type Props = {
   order: Order;
+  onUpdateStatus: (newStatus: OrderStatus) => void; // onUpdateStatus expects OrderStatus
 };
 
-const OrderItemCard = ({ order }: Props) => {
-  const { updateRestaurantStatus, isLoading } = useUpdateMyRestaurantOrder();
+const OrderItemCard = ({ order, onUpdateStatus }: Props) => {
   const [status, setStatus] = useState<OrderStatus>(order.status);
 
-  useEffect(() => {
-    setStatus(order.status);
-  }, [order.status]);
-
-  const handleStatusChange = async (newStatus: OrderStatus) => {
-    await updateRestaurantStatus({
-      orderId: order._id as string,
-      status: newStatus,
-    });
-    setStatus(newStatus);
+  const handleStatusChange = async (newStatus: string) => {
+    const status: OrderStatus = newStatus as OrderStatus; // Type assertion to OrderStatus
+    await onUpdateStatus(status); // Call the parent function
+    setStatus(status); // Update local status
   };
 
   const getTime = () => {
@@ -51,9 +45,7 @@ const OrderItemCard = ({ order }: Props) => {
         <CardTitle className="grid md:grid-cols-4 gap-4 justify-between mb-3">
           <div>
             Customer Name:
-            <span className="ml-2 font-normal">
-              {order.deliveryDetails.name}
-            </span>
+            <span className="ml-2 font-normal">{order.deliveryDetails.name}</span>
           </div>
           <div>
             Delivery address:
@@ -68,7 +60,7 @@ const OrderItemCard = ({ order }: Props) => {
           <div>
             Total Cost:
             <span className="ml-2 font-normal">
-              £{(order.totalAmount / 100).toFixed(2)}
+              ₹{(order.totalAmount / 100).toFixed(2)}
             </span>
           </div>
         </CardTitle>
@@ -77,7 +69,7 @@ const OrderItemCard = ({ order }: Props) => {
       <CardContent className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           {order.cartItems.map((cartItem) => (
-            <span>
+            <span key={cartItem.menuItemId}>
               <Badge variant="outline" className="mr-2">
                 {cartItem.quantity}
               </Badge>
@@ -89,15 +81,16 @@ const OrderItemCard = ({ order }: Props) => {
           <Label htmlFor="status">What is the status of this order?</Label>
           <Select
             value={status}
-            disabled={isLoading}
-            onValueChange={(value) => handleStatusChange(value as OrderStatus)}
+            onValueChange={handleStatusChange}
           >
             <SelectTrigger id="status">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent position="popper">
               {ORDER_STATUS.map((status) => (
-                <SelectItem value={status.value}>{status.label}</SelectItem>
+                <SelectItem key={status.value} value={status.value}>
+                  {status.label}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
