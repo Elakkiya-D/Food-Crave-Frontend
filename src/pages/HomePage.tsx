@@ -146,8 +146,8 @@ const handleSearchSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
                     className="rounded-lg w-full object-cover transition-all duration-300 hover:opacity-90"
                   />
                   <h3 className="mt-3 font-bold text-lg">{restaurant.restaurantName}</h3>
-                  <p className="text-gray-600">{restaurant.city}</p>
-                  <p className="text-gray-600">{restaurant.country}</p>
+                  {/* <p className="text-gray-600">{restaurant.city}</p>
+                  <p className="text-gray-600">{restaurant.country}</p> */}
                   {/* <p className="text-orange-500 font-semibold">
                     Delivery in {restaurant.estimatedDeliveryTime} minutes
                   </p> */}
