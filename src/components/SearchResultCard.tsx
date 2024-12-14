@@ -12,10 +12,10 @@ const SearchResultCard = ({ restaurant }: Props) => {
       to={`/detail/${restaurant._id}`}
       className="grid lg:grid-cols-[2fr_3fr] gap-5 group"
     >
-        <div className="relative w-[200px] h-[200px] mb-2">
+        <div className="relative w-[150px] h-[150px] mb-2 ml-10">
           <img
             src={restaurant.imageUrl}
-            className="rounded-full object-cover" 
+            className="rounded-md-full object-cover" 
             alt="Restaurant Logo" 
           />
         </div>

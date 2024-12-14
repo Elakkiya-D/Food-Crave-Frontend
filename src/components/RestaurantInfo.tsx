@@ -17,10 +17,10 @@ const RestaurantInfo = ({ restaurant }: Props) => {
     <Card className="border-sla">
     <CardHeader>
       <div className="flex items-center gap-4">
-        <div className="relative w-[80px]">
+        <div className="relative w-[50px] h-[50px]">
           <img
             src={restaurant.imageUrl}
-            className="rounded-full object-cover"
+            className="rounded-lg-full object-cover"
             alt="Restaurant Logo"
           />
         </div>

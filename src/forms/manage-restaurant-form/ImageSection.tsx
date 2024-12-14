@@ -25,10 +25,10 @@ const ImageSection = () => {
       <br></br>
       <div className="flex flex-col gap-2 md:w-[50%]">
         {existingImageUrl && (
-          <div className="relative w-[100px] h-[50px] mb-2">
+          <div className="relative w-[50px] h-[50px] mb-2">
           <img
             src={existingImageUrl}
-            className="rounded-full object-cover" 
+            className="rounded-md-full object-cover" 
             alt="Restaurant Logo" 
           />
         </div>

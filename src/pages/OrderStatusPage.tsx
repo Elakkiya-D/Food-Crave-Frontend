@@ -19,10 +19,10 @@ const OrderStatusPage = () => {
           <OrderStatusHeader order={order} />
           <div className="grid gap-10 md:grid-cols-2">
             <OrderStatusDetail order={order} />
-            <div className="relative w-[200px] h-[200px] mb-2 flex justify-center items-center mx-auto">
+            <div className="relative w-[150px] h-[150px] mb-2 flex justify-center items-center mx-auto">
               <img
                 src={order.restaurant.imageUrl}
-                className="rounded-full object-cover"
+                className="rounded-md-full object-cover"
                 alt="Restaurant Logo"
               />
             </div>
