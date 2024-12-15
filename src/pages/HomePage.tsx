@@ -88,7 +88,7 @@ const handleSearchSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         ) : (
           <div>
             <div className="grid md:grid-cols-3 gap-6 mt-8">
-              {restaurants?.map((restaurant) => (
+              {restaurants?.slice(0, 3).map((restaurant) => (
                 <div
                   key={restaurant._id}
                   className="border border-orange-500 rounded-lg p-3 shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-orange-700"
@@ -134,7 +134,7 @@ const handleSearchSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         ) : (
           <div>
             <div className="grid md:grid-cols-3 gap-6 mt-8">
-              {restaurants?.map((restaurant) => (
+              {restaurants ?.slice(0, 3).map((restaurant) => (
                 <div
                   key={restaurant._id}
                   className="border border-orange-500 rounded-lg p-3 shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-orange-700"
