@@ -42,6 +42,13 @@ const formSchema = z
     ),
     imageUrl: z.string().optional(),
     imageFile: z.instanceof(File, { message: "image is required" }).optional(),
+    googleStarRating: z.coerce
+      .number({
+        required_error: "Google star rating is required",
+        invalid_type_error: "Must be a valid number",
+      })
+      .min(0, "Rating must be at least 0")
+      .max(5, "Rating must not exceed 5"),
   })
   .refine((data) => data.imageUrl || data.imageFile, {
     message: "Either image URL or image File must be provided",
@@ -62,6 +69,7 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
     defaultValues: {
       cuisines: [],
       menuItems: [{ name: "", price: 0 }],
+      googleStarRating: 0,
     },
   });
 
@@ -104,6 +112,7 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
       "estimatedDeliveryTime",
       formDataJson.estimatedDeliveryTime.toString()
     );
+    formData.append("starRating", formDataJson.googleStarRating.toString());
     formDataJson.cuisines.forEach((cuisine, index) => {
       formData.append(`cuisines[${index}]`, cuisine);
     });
@@ -135,6 +144,26 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
         <MenuSection />
         <Separator />
         <ImageSection />
+        {/* Google Star Rating Section */}
+        <div className="space-y-2">
+          <label htmlFor="googleStarRating" className="block font-medium">
+            Google Star Rating
+          </label>
+          <input
+            id="googleStarRating"
+            type="number"
+            step="0.1"
+            min="0"
+            max="5"
+            {...form.register("googleStarRating", { valueAsNumber: true })}
+            className="w-full rounded border border-gray-300 px-3 py-2"
+          />
+          {form.formState.errors.googleStarRating && (
+            <p className="text-red-600 text-sm">
+              {form.formState.errors.googleStarRating.message}
+            </p>
+          )}
+        </div>
         {isLoading ? <LoadingButton /> : <Button type="submit">Submit</Button>}
       </form>
     </Form>

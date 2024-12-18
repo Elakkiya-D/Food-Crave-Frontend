@@ -76,9 +76,9 @@ export const useNearbyRestaurants = (maxDeliveryTime: number, city?: string) => 
   };
 
   const { data: restaurants, isLoading } = useQuery(
-    ["nearbyRestaurants", maxDeliveryTime, city], // include city as part of query key
+    ["nearbyRestaurants", maxDeliveryTime, city],
     fetchNearbyRestaurants,
-    { enabled: maxDeliveryTime > 0 && city != undefined } // Ensure that the query is only enabled when city is selected
+    { enabled: maxDeliveryTime > 0 && city != undefined }
   );
 
   return {

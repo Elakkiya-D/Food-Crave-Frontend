@@ -4,7 +4,7 @@ import landingImage from "../assets/landing4.png";
 import { useNavigate } from "react-router-dom";
 import { cities } from "@/config/city-names-config";
 import { SearchForm } from "@/components/SearchBar";
-
+import ReactStars from "react-stars";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -88,7 +88,9 @@ const handleSearchSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         ) : (
           <div>
             <div className="grid md:grid-cols-3 gap-6 mt-8">
-              {restaurants?.slice(0, 3).map((restaurant) => (
+            {restaurants
+             ?.sort((a, b) => a.estimatedDeliveryTime - b.estimatedDeliveryTime) // Sort by estimatedDeliveryTime in ascending order
+             .slice(0, 3).map((restaurant) => (
                 <div
                   key={restaurant._id}
                   className="border border-orange-500 rounded-lg p-3 shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-orange-700"
@@ -105,6 +107,13 @@ const handleSearchSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
                   <p className="text-orange-500 font-semibold">
                     Delivery in {restaurant.estimatedDeliveryTime} minutes
                   </p>
+                  <ReactStars
+                   count={5}
+                   value={restaurant.starRating || 0}
+                   size={24}
+                   color2={"#ffd700"}
+                   edit={false}
+                  />
                 </div>
               ))}
             </div>

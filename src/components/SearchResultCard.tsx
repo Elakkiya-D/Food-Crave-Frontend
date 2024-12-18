@@ -1,6 +1,7 @@
 import { Restaurant } from "@/types";
 import { Link } from "react-router-dom";
 import { Banknote, Clock, Dot } from "lucide-react";
+import ReactStars from "react-stars";
 
 type Props = {
   restaurant: Restaurant;
@@ -40,6 +41,15 @@ const SearchResultCard = ({ restaurant }: Props) => {
             <div className="flex items-center gap-1">
               <Banknote />
               Delivery from ₹{(restaurant.deliveryPrice / 100).toFixed(2)}
+            </div>
+            <div className="flex items-center gap-1">
+            <ReactStars
+             count={5}
+             value={restaurant.starRating || 0}
+             size={24}
+             color2={"#ffd700"}
+             edit={false}
+            />
             </div>
           </div>
         </div>
